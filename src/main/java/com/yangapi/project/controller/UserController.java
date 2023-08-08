@@ -27,7 +27,7 @@ import static com.yangapi.project.constant.UserConstant.SALT;
 /**
  * 用户接口
  *
- * @author yupi
+ * @author lcy
  */
 @RestController
 @RequestMapping("/user")

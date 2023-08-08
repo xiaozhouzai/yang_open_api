@@ -61,8 +61,6 @@
             <artifactId>hutool-all</artifactId>
             <version>5.8.16</version>
         </dependency>
-
-
         <!-- 整合swagger knife4j-->
         <!--springfox-->
         <dependency>

@@ -3,7 +3,7 @@ package com.yangapi.project.constant;
 /**
  * 用户常量
  *
- * @author yupi
+ * @author lcy
  */
 public interface UserConstant {
     /**
