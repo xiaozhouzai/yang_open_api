@@ -7,8 +7,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yangapi.project.common.ErrorCode;
 import com.yangapi.project.exception.BusinessException;
 import com.yangapi.project.mapper.UserMapper;
-import com.yangapi.project.model.entity.User;
+
 import com.yangapi.project.service.UserService;
+import com.yangapi.yangapicommon.model.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;

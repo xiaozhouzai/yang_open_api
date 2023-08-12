@@ -1,6 +1,7 @@
 package com.yangapi.project.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.gson.Gson;
@@ -10,13 +11,16 @@ import com.yangapi.project.common.DeleteRequest;
 import com.yangapi.project.common.ErrorCode;
 import com.yangapi.project.common.ResultUtils;
 import com.yangapi.project.constant.CommonConstant;
-import com.yangapi.project.enums.InterfaceInfoStatusEnum;
 import com.yangapi.project.exception.BusinessException;
 import com.yangapi.project.model.dto.interfaceinfo.*;
-import com.yangapi.project.model.entity.InterfaceInfo;
-import com.yangapi.project.model.entity.User;
+
+import com.yangapi.project.model.enums.InterfaceInfoStatusEnum;
 import com.yangapi.project.service.InterfaceInfoService;
 import com.yangapi.project.service.UserService;
+import com.yangapi.sdk.client.YangApiClient;
+import com.yangapi.sdk.entity.Total;
+import com.yangapi.yangapicommon.model.entity.InterfaceInfo;
+import com.yangapi.yangapicommon.model.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -24,8 +28,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
@@ -39,7 +45,6 @@ public class InterfaceInfoController {
     private UserService userService;
 
     // region 增删改查
-
     /**
      * 创建
      *
@@ -157,6 +162,25 @@ public class InterfaceInfoController {
         return ResultUtils.success(interfaceInfoList);
     }
 
+    @PostMapping("/deleteByIdList")
+    @AuthCheck(mustRole = "admin")
+    public BaseResponse<Boolean> deleteByIdList(@RequestBody DeleteByIdListRequest deleteByIdListRequest){
+        if (deleteByIdListRequest == null){
+            throw new BusinessException(ErrorCode.DATA_REQUEST_ERROR.getCode(),"请选择你要删除的接口");
+        }
+        List<Long> idList = deleteByIdListRequest.getIdList();
+        LambdaQueryWrapper<InterfaceInfo> queryWrapper = new LambdaQueryWrapper<>();
+
+        idList.forEach(id -> {
+            queryWrapper.eq(InterfaceInfo::getId,id);
+            InterfaceInfo one = interfaceInfoService.getOne(queryWrapper);
+            if (one == null){
+                throw new BusinessException(ErrorCode.PARAMS_ERROR,"你要删除的接口信息不存在");
+            }
+        });
+        return ResultUtils.success(interfaceInfoService.removeByIds(idList));
+    }
+
     /**
      * 分页获取列表
      * @param request
@@ -254,14 +278,17 @@ public class InterfaceInfoController {
         if (Objects.equals(oldInterfaceInfo.getStatus(), InterfaceInfoStatusEnum.OFFLINE.getCode())) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "接口已关闭");
         }
+        //todo 判断每个接口的url是否包含调用客户端的方法名，包含则该调用方法适用于该接口
+        //todo 这里要判断调用接口的id，为每个接口都写一个调用方法，下面只是展示了一个接口的调用，其他接口不适用
         User loginUser = userService.getLoginUser(request);
         String accessKey = loginUser.getAccessKey();
         String secretKey = loginUser.getSecretKey();
-        return ResultUtils.success(secretKey);
+        YangApiClient yangApiClient = new YangApiClient(accessKey,secretKey);
+        Gson gson = new Gson();
+        Total total = gson.fromJson(userRequestParams, Total.class);
+        String newsRankingList = yangApiClient.getNewsRankingList(total);
+        return ResultUtils.success(newsRankingList);
     }
-
-
-
 
 
 

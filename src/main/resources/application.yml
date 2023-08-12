@@ -32,3 +32,30 @@ mybatis-plus:
       logic-delete-field: isDelete # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
       logic-delete-value: 1 # 逻辑已删除值(默认为 1)
       logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+
+
+# Dubbo配置
+dubbo:
+  cache: false
+  # 消费者相关配置
+#  consumer:
+#    # 结果缓存(LRU算法)
+#    # 会有数据不一致问题 建议在注解局部开启
+#    cache: false
+#    # 支持校验注解
+#    validation: true
+#    # 超时时间
+#    timeout: 3000
+    # 初始化检查
+#    check: false
+  application:
+    name: yangapi-backend
+  protocol:
+    # dubbo 协议端口(-1表示自增端口,从20880开始)
+    port: 20880
+    name: dubbo
+  registry:
+    id: nacos-registry
+    address: nacos://127.0.0.1:8848
+
+# Nacos配置

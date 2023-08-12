@@ -1,0 +1,67 @@
+server:
+  port: 8100
+logging:
+  level:
+    org.springframework.cloud.gateway: trace   #???? trace???
+    reactor.netty.http.client: debug
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - AddRequestHeader=lcy,yangapi   #???????????,????????????????
+      routes:
+      - id: interface_route
+        uri: http://localhost:8090  #????????,????/api/**
+        predicates:
+          - Path=/api/**
+        filters:
+          - AddRequestHeader=gateway-env, springcloud-gateway  #?????,key:gateway-env,values:springcloud-gateway
+#          - name: CircuitBreaker
+#            args:
+#              name: myCircuitBreaker
+#              fallbackUri: forward:/api/yangapi/fallback   # ??????????????uri
+dubbo:
+  cache: false
+  # 消费者相关配置
+#  consumer:
+#    # 结果缓存(LRU算法)
+#    # 会有数据不一致问题 建议在注解局部开启
+#    cache: false
+#    # 支持校验注解
+#    validation: true
+#    # 超时时间
+#    timeout: 3000
+    # 初始化检查
+#    check: false
+
+  application:
+    name: yangapi-backend
+  protocol:
+    # dubbo 协议端口(-1表示自增端口,从20880开始)
+    port: 20881
+    name: dubbo
+  registry:
+    id: nacos-registry
+    address: nacos://127.0.0.1:8848
+
+
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default: #??
+        ringBufferSizeInClosedState: 100
+        ringBufferSizeInHalfOpenState: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 5000
+        slidingWindowSize: 10
+        permittedNumberOfCallsInHalfOpenState: 3
+        registerHealthIndicator: true
+      myCircuitBreaker: #??
+        ringBufferSizeInClosedState: 50
+        ringBufferSizeInHalfOpenState: 5
+        failureRateThreshold: 60
+        waitDurationInOpenState: 8000
+        slidingWindowSize: 15
+        permittedNumberOfCallsInHalfOpenState: 2
+        registerHealthIndicator: true

@@ -1,7 +1,9 @@
 package com.yangapi.project.mapper;
 
-import com.yangapi.project.model.entity.InterfaceInfo;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.yangapi.yangapicommon.model.entity.InterfaceInfo;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
 * @author lcyzh
@@ -9,6 +11,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @createDate 2023-08-04 16:20:28
 * @Entity com.yangapi.project.model.entity.InterfaceInfo
 */
+
 public interface InterfaceInfoMapper extends BaseMapper<InterfaceInfo> {
 
 }

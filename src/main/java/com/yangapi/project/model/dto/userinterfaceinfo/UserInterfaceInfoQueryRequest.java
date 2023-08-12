@@ -1,7 +1,6 @@
 package com.yangapi.project.model.dto.userinterfaceinfo;
 
 import com.yangapi.project.common.PageRequest;
-import com.yangapi.project.model.entity.UserInterfaceInfo;
 import lombok.Data;
 
 import java.io.Serializable;

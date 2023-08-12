@@ -1,8 +1,10 @@
 package com.yangapi.project.service;
 
 
+
+
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yangapi.project.model.entity.User;
+import com.yangapi.yangapicommon.model.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
 

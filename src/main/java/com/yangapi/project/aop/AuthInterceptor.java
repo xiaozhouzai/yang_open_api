@@ -3,9 +3,10 @@ package com.yangapi.project.aop;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.yangapi.project.annotation.AuthCheck;
 import com.yangapi.project.exception.BusinessException;
-import com.yangapi.project.model.entity.User;
+
 import com.yangapi.project.service.UserService;
 import com.yangapi.project.common.ErrorCode;
+import com.yangapi.yangapicommon.model.entity.User;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

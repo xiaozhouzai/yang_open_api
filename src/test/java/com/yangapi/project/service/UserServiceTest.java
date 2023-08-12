@@ -1,6 +1,6 @@
 package com.yangapi.project.service;
 
-import com.yangapi.project.model.entity.User;
+import com.yangapi.yangapicommon.model.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

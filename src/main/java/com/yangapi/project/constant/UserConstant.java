@@ -5,7 +5,7 @@ package com.yangapi.project.constant;
  *
  * @author lcy
  */
-public interface UserConstant {
+public interface   UserConstant {
     /**
      * 盐值，混淆密码
      */

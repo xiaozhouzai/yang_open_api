@@ -1,8 +1,8 @@
 package com.yangapi.project.service;
 
-import com.yangapi.project.model.entity.InterfaceInfo;
-import com.yangapi.project.model.entity.UserInterfaceInfo;
+
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yangapi.yangapicommon.model.entity.UserInterfaceInfo;
 
 /**
 * @author lcyzh

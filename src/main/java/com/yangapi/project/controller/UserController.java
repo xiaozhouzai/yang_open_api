@@ -9,9 +9,10 @@ import com.yangapi.project.common.ErrorCode;
 import com.yangapi.project.common.ResultUtils;
 import com.yangapi.project.exception.BusinessException;
 import com.yangapi.project.model.dto.user.*;
-import com.yangapi.project.model.entity.User;
+
 import com.yangapi.project.model.vo.UserVO;
 import com.yangapi.project.service.UserService;
+import com.yangapi.yangapicommon.model.entity.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.DigestUtils;
